@@ -403,12 +403,13 @@
                             var url = "{{url('/')}}";
                             var html = ``;
                             $.each(res.products, function(index, value) {
+                                var url_view_detail = "{!! url('/') !!}" + `/product/${value.alias}/${value.id}`;
                                 html += `<tr>
-                                                <td><a href="#"><img class="product-thumbnail img-fluid" src="${url+value.image}"
+                                                <td><a href="${url_view_detail}"><img class="product-thumbnail img-fluid" src="${url+value.image}"
                                                     alt="" style="max-width: 80px"></a>
                                                 </td>
                                                 <td>
-                                                    <h6 class="mb-0"><a href="javascript:void(0);">${value.name}</a></h6>
+                                                    <h6 class="mb-0"><a href="${url_view_detail}">${value.name}</a></h6>
                                                 </td>
                                                 <td>${parseFloat(value.price).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</td>
                                                 <td>

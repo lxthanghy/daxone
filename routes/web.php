@@ -90,6 +90,7 @@ Route::group(['namespace' => 'Client'], function () {
     Route::group(['middleware' => 'customer'], function () {
         Route::get('/thong-tin-tai-khoan', 'CustomerController@my_account')->name('customer.my_account');
         Route::get('/dang-xuat', 'CustomerController@logout_customer')->name('customer.logout');
+        Route::get('/view-order', 'CustomerController@view_order')->name('customer.view_order');
     });
 
 

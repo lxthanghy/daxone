@@ -49,7 +49,7 @@ class CustomerController extends Controller
             $username = $request->login_username;
             $password = $request->login_password;
             $url =
-            $login = Auth::guard('customer')->attempt(['username' => $username, 'password' => $password], $request->has('remember'));
+                $login = Auth::guard('customer')->attempt(['username' => $username, 'password' => $password], $request->has('remember'));
 
             return response()
                 ->json([
@@ -130,6 +130,24 @@ class CustomerController extends Controller
         // dump($customer);
         $orders = Order::where('customer_id', $id_customer)->get();
         return view('Client.customer.my_account', compact('orders'));
+    }
+
+    public function view_order(Request $request)
+    {
+        $id_order = $request->id_order;
+        $order = Order::find($id_order);
+        $created_at = date('d/m/Y H:i:s A', strtotime($order->created_at));
+        $products = DB::table('order_details')
+            ->where('order_id', $id_order)
+            ->join('products', 'order_details.product_id', '=', 'products.id')
+            ->select('order_details.*', 'products.id', 'products.name', 'products.alias', 'products.image')
+            ->get();
+        return response()->json([
+            'order' => $order,
+            'products' => $products,
+            'created_at' => $created_at,
+            'status' => true
+        ]);
     }
 
     public function logout_customer()
